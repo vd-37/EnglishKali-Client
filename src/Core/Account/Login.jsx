@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import Logo from "../../assets/Logo.jpeg";
 import { API } from "../../service/api";
+import { DataContext } from "../../context/DataProvider";
+import { useNavigate } from "react-router-dom";
 
 
 //Here the styled Box tag will be used as Component
@@ -63,14 +65,28 @@ const signupInitialValues = {
   password: '',
 }
 
-const Login = () => {
+const loginInitialValues = {
+  email: '',
+  password: '',
+}
+
+const Login = ({isUserAuthenticated}) => {
   const [signup, setSignup] = useState(signupInitialValues);
+  const [login, setLogin] = useState(loginInitialValues);
   const [account, toggleAccount] = useState('login');
   const [error, setError] = useState('');
 
+  const { setAccount } = useContext(DataContext)
+  const navigate = useNavigate()
+
   const onInputChange = (e) => {
     setSignup({...signup, [e.target.name]: e.target.value});
-    console.log(signup);
+    // console.log(signup);
+  }
+
+  const onValueChange = (e) => {
+    setLogin({...login, [e.target.name]: e.target.value});
+    console.log(login);
   }
   
   const signupUser = async () => {
@@ -82,7 +98,23 @@ const Login = () => {
     } else {
         setError('Something went wrong! please try again later');
     }
-}
+  }
+
+  const loginUser = async () => {
+    let response = await API.userLogin(login);
+    if(response.isSuccess){
+      setError('')
+      sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`)
+      sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`)
+
+      setAccount({name: response.data.name, email: response.data.email})
+      isUserAuthenticated(true)
+      navigate('/');
+    }
+    else{
+      setError('Invalid credentials, please check username and password');
+    }
+  }
 
 const toggleSignup = () => {
   account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
@@ -95,12 +127,12 @@ const toggleSignup = () => {
                 {
                     account === 'login' ?
                         <Wrapper>
-                            <TextField variant="standard"  name='email' label='Enter Email' />
-                            <TextField variant="standard"  name='password' label='Enter Password' />
+                            <TextField variant="standard" value={login.email} onChange={(e) => onValueChange(e)} name='email' label='Enter Email' />
+                            <TextField variant="standard" value={login.p} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
 
                             {error && <Error>{error}</Error>}
 
-                            <LoginButton variant="contained" >Login</LoginButton>
+                            <LoginButton variant="contained" onClick={() => loginUser()}>Login</LoginButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :

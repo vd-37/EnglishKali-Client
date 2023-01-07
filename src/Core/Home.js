@@ -7,7 +7,7 @@ import Menu from './Menu'
 export const Home = () => {
   return (
     <div>
-      <Menu />
+      {/* <Menu /> */}
       <HomeLayout />
       <About/>
       <Footer></Footer>

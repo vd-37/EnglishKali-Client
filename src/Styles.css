@@ -32,7 +32,7 @@ body{
 .bg{
   display: flex;
   align-items: center;
-  height: 87vh;
+  height: 100vh;
   background-image: linear-gradient(to right, rgba(0,0,0,0.8),rgba(0,0,0,0)),url("./assets/children.jpg");
   background-attachment: fixed;
   background-position: center;
