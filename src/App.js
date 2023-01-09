@@ -5,6 +5,8 @@ import DataProvider from "./context/DataProvider";
 import Login from "./Core/Account/Login";
 import BlogHome from "./Core/Blog/BlogHome";
 import CreatePost from "./Core/Blog/Create/CreatePost";
+import UpdatePost from "./Core/Blog/Create/UpdatePost";
+import DetailView from "./Core/Blog/Details/DetailView";
 import Header from "./Core/Header/Header";
 import { Home } from "./Core/Home";
 
@@ -29,6 +31,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blogs" element={<BlogHome />} />
           <Route path="/create" element={<CreatePost />} />
+          <Route path="/details/:id" element={<DetailView />} />
+          <Route path="/update/:id" element={<UpdatePost />} />
         </Route>
        </Routes>
        </Box>

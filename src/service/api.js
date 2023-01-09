@@ -1,19 +1,27 @@
 // import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios";
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from "../constants/config";
+import { getAccessToken, getType } from "../utils/common-utils";
+
+
+
 const API_URL = "http://localhost:8000";
-
-
 const axiosInstance = axios.create({
     baseURL: API_URL,
     timeout: 10000,
     headers: {
-        "Content-Type" : "application/json"
+        "Accept" : "application/json, form-data",
+
     } 
 })
 
 axiosInstance.interceptors.request.use(function (config) {
-    return config;
+  if(config.TYPE.params){
+    config.params = config.TYPE.params;
+  }  else if(config.TYPE.query){
+    config.url = config.url + '/' + config.TYPE.query;
+  }
+  return config;
   }, function (error) {
     return Promise.reject(error);
   });
@@ -75,12 +83,12 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
         axiosInstance({
             method: value.method,
             url: value.url,
-            data: body,
+            data: value.method === 'DELETE' ? {} : body,
             responseType: value.responseType,
-            // headers: {
-            //     authorization: getAccessToken(),
-            // },
-            // TYPE: getType(value, body),
+            headers: {
+                authorization: getAccessToken(),
+            },
+            TYPE: getType(value, body),
             onUploadProgress: function(progressEvent) {
                 if (showUploadProgress) {
                     let percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);

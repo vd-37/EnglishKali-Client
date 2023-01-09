@@ -1,7 +1,7 @@
 import { Box, Button, FormControl, InputBase, styled, TextareaAutosize } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { AddCircle as Add } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { DataContext } from '../../../context/DataProvider';
 import { API } from '../../../service/api';
 
@@ -49,7 +49,7 @@ const initialPost = {
   createdDate: new Date()
 }
 
-const CreatePost = () => {
+const UpdatePost = () => {
   
   const [post, setPost] = useState(initialPost)
   const [file, setFile] = useState('');
@@ -58,9 +58,21 @@ const CreatePost = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-
+  const  {id}  = useParams();
+  
+//   console.log(id);
   const url = post.picture? post.picture: `https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80`
-
+  
+  useEffect(() => {
+    const fetchData = async () => {
+        let response = await API.getPostById(id);
+        if(response.isSuccess){
+            setPost(response.data)
+        }
+    }
+   fetchData()
+  }, [])
+  
 
   useEffect(() => {
     const getImage = async () => {
@@ -83,11 +95,11 @@ const CreatePost = () => {
     setPost({...post, [e.target.name] : e.target.value})
   }
 
-  const savePost = async () => {
-    let response = await API.createPost(post)
+  const updatePost = async () => {
+    let response = await API.updatePost(post)
     if(response.isSuccess){
-      alert("Blog posted")
-      navigate('/blogs');
+      alert("Blog updated")
+      navigate(`/details/${id}`);
     }
   }
 
@@ -104,8 +116,8 @@ const CreatePost = () => {
                style={{display: 'none'}}
                onChange={e =>  setFile(e.target.files[0])}
         />
-        <InputTextField placeholder='Title' onChange={e => handleChange(e)} name="title"/>
-        <Button variant='contained' onClick={() => savePost()}>Post</Button>
+        <InputTextField placeholder='Title' value={post.title} onChange={e => handleChange(e)} name="title"/>
+        <Button variant='contained' onClick={() => updatePost()}>Update</Button>
       </StyledFormControl>
 
       <Textarea
@@ -113,9 +125,10 @@ const CreatePost = () => {
         placeholder="Write your blog..."
         onChange={e => handleChange(e)}
         name="description"
+        value={post.description}
       />
     </Container>
   )
 }
 
-export default CreatePost
+export default UpdatePost
