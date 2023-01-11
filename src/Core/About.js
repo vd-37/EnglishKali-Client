@@ -1,5 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import alphabets from "../assets/alphabets.jpg"
+
 const About = () => {
   return (
     <div className='about'>
@@ -11,7 +13,8 @@ const About = () => {
                 <br />
                 <br />
                 <h5>Thoroughly understand the concepts of <br/> vowels and consonants</h5>
-                <button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                <Link to="blogs"><button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                </Link>
             </div>
             <div className='aboutImage'>
                 <img className='imageAbout' src={alphabets} alt="Alphabets images"></img>
@@ -29,7 +32,8 @@ const About = () => {
                 <br />
                 <br />
                 <h5>Thoroughly understand the concepts of <br/> vowels and consonants</h5>
-                <button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                <Link to="blogs"><button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                </Link>
             </div>
         </div>
 
@@ -41,7 +45,8 @@ const About = () => {
                 <br />
                 <br />
                 <h5>Thoroughly understand the concepts of <br/> vowels and consonants</h5>
-                <button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                <Link to="blogs"><button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                </Link>
             </div>
             <div className='aboutImage'>
                 <img className='imageAbout' src={alphabets} alt="Alphabets images"></img>
@@ -59,7 +64,8 @@ const About = () => {
                 <br />
                 <br />
                 <h5>Thoroughly understand the concepts of <br/> vowels and consonants</h5>
-                <button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                <Link to="blogs"><button type="button" className="btn btn-light btn-lg">Start Learning</button>
+                </Link>
             </div>
             
         </div>
