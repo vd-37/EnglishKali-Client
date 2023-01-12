@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-
+import parse from 'html-react-parser';
 import { Box, Typography, styled } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import { Link, useNavigate, useParams } from 'react-router-dom'
@@ -53,6 +53,11 @@ const Author = styled(Box)(({ theme }) => ({
     },
 }));
 
+const Desc = styled(Typography)`
+white-space: pre-line;
+
+`;
+
 const DetailView = () => {
     const url = 'https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80';
     
@@ -98,11 +103,13 @@ const DetailView = () => {
                 </Link>
                 <Typography style={{marginLeft: 'auto'}}>{new Date(post.createdDate).toDateString()}</Typography>
             </Author>
-
-            <Typography>{post.description}</Typography>
+            <Desc className='tables'>{parse(`<table>${post.description}</table>`)}</Desc>
+            
             <Comments post={post} />
         </Container>
     )
 }
 
 export default DetailView;
+
+
