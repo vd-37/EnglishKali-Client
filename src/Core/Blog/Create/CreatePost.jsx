@@ -4,6 +4,10 @@ import { AddCircle as Add } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DataContext } from '../../../context/DataProvider';
 import { API } from '../../../service/api';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import Quill from 'quill';
+import Table from 'quill-table';
 
 const Container = styled(Box)(({ theme }) => ({
   margin: '50px 100px',
@@ -49,10 +53,12 @@ const initialPost = {
   createdDate: new Date()
 }
 
+
 const CreatePost = () => {
   
   const [post, setPost] = useState(initialPost)
   const [file, setFile] = useState('');
+  const [editorHtml, setEditorHtml] = useState('');
 
   const { account } = useContext(DataContext)
 
@@ -60,7 +66,21 @@ const CreatePost = () => {
   const navigate = useNavigate();
 
   const url = post.picture? post.picture: `https://images.unsplash.com/photo-1543128639-4cb7e6eeef1b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wJTIwc2V0dXB8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80`
+  
+  Quill.register('modules/table', Table);
 
+  const modules = {
+    table: true,
+    // other modules
+  };
+  
+  const formats = [
+    // other formats
+    'table',
+    'tableHeader',
+    'tableCell',
+  ];
+  
 
   useEffect(() => {
     const getImage = async () => {
@@ -80,8 +100,15 @@ const CreatePost = () => {
   
 
   const handleChange = (e) => {
+    console.log(e.target.value);
     setPost({...post, [e.target.name] : e.target.value})
   }
+
+  const handleEditorChange = (value) => {
+    setEditorHtml(value);
+    setPost({...post, description: value})
+  }
+
 
   const savePost = async () => {
     let response = await API.createPost(post)
@@ -94,7 +121,6 @@ const CreatePost = () => {
   return (
     <Container>
       <Image src={url} alt="banner"/>
-
       <StyledFormControl>
         <label htmlFor="fileinput">
         <Add fontSize="large" color="action" />
@@ -107,12 +133,13 @@ const CreatePost = () => {
         <InputTextField placeholder='Title' onChange={e => handleChange(e)} name="title"/>
         <Button variant='contained' onClick={() => savePost()}>Post</Button>
       </StyledFormControl>
-
-      <Textarea
-        minRows={5}
+      <ReactQuill
+        value={editorHtml}
+        onChange={handleEditorChange}
         placeholder="Write your blog..."
-        onChange={e => handleChange(e)}
         name="description"
+        // modules={modules}
+        // formats={formats}
       />
     </Container>
   )

@@ -1,29 +1,53 @@
-import React from 'react'
+import styled from "@emotion/styled";
+import { Box } from "@mui/system";
+import React from "react";
+import logo from "../assets/Logo.jpeg";
+
+const Container = styled(Box)`
+  display: flex;
+  width: 100%;
+  margin: 30px 0;
+  justify-content: space-between;
+`;
+
+const LeftContainer = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
-    <div>
-        <div class="padding">
-    <div class="left-footer">
-      <img src="images/logo.svg" alt="" /> <br />
-      <ul>
-        <li><a class="underline" href="">About</a>  </li>
-        <li><a class="underline" href="">Careers</a></li>
-        <li><a class="underline" href="">Events</a></li>
-        <li><a class="underline" href="">Products</a> </li>
-        <li><a class="underline" href="">Support</a> </li>
-      </ul>
-    </div>
-    <div class="right-footer">
-      <img src="images/icon-facebook.svg" class="social-media" alt="" />
-      <img src="images/icon-instagram.svg" class="social-media" alt="" />
-      <img src="images/icon-pinterest.svg" class="social-media" alt="" />
-      <img src="images/icon-twitter.svg" class="social-media" alt="" /> <br />
-      <p>© 2021 Loopstudios. All rights reserved.</p>
-    </div>
-  </div>
-    </div>
-  )
-}
+    <nav className="navbar navbar-expand-md navbar-light bg-light mt-5">
+      <Container>
+        <LeftContainer>
+          <a className="navbar-brand" href="/">
+            <img className="logo" alt="logo" src={logo} />
+          </a>
+          <div>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item active">
+              <a href="#home" className="nav-link">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="#about" className="nav-link">
+                About Us
+              </a>
+            </li>
+            <li className="nav-item">
+              <a href="#services" className="nav-link">
+                Lessons
+              </a>
+            </li>
+          </ul>
+          </div>
+        </LeftContainer>
+        <Box>&copy; {year} All rights reserved. EnglishKali</Box>
+      </Container>
+    </nav>
+  );
+};
 
-export default Footer
+export default Footer;

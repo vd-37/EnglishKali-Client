@@ -21,7 +21,7 @@ const Menu = () => {
 					<a href="#about" className="nav-link">About Us</a>
 				</li>
 				<li className="nav-item">
-					<a href="#services" className="nav-link">Blog</a>
+					<a href="#services" className="nav-link">Lessons</a>
 				</li>
 				<li className="nav-item">
 					<a href="#team" className="nav-link">Log in</a>

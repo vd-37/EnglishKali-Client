@@ -103,7 +103,8 @@ const DetailView = () => {
                 </Link>
                 <Typography style={{marginLeft: 'auto'}}>{new Date(post.createdDate).toDateString()}</Typography>
             </Author>
-            <Desc className='tables'>{parse(`<table>${post.description}</table>`)}</Desc>
+            {/* <Desc className='tables'>{parse(`<table>${post.description}</table>`)}</Desc> */}
+            <Desc className='tables'>{parse(`${post.description}`)}</Desc>
             
             <Comments post={post} />
         </Container>

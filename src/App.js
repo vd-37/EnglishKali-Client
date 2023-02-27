@@ -9,14 +9,17 @@ import CreatePost from "./Core/Blog/Create/CreatePost";
 import UpdatePost from "./Core/Blog/Create/UpdatePost";
 import DetailView from "./Core/Blog/Details/DetailView";
 import Contact from "./Core/Contact/Contact";
+import Footer from "./Core/Footer";
 import Header from "./Core/Header/Header";
 import { Home } from "./Core/Home";
+import Quill from "./Core/QuillDemo/Quill";
 
 const PrivateRoute = ({isAuthenticated, ...props}) => {
   return isAuthenticated ? 
   <>
     <Header />      
     <Outlet />
+    <Footer />
   </> : 
     <Navigate replace to="/login" />    
 }

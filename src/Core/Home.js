@@ -7,10 +7,8 @@ import Menu from './Menu'
 export const Home = () => {
   return (
     <div>
-      {/* <Menu /> */}
       <HomeLayout />
       <About/>
-      <Footer></Footer>
     </div>
   )
 }

@@ -25,7 +25,7 @@ const Banner = () => {
     
     return (
         <Image>
-            <Heading>BLOG</Heading>
+            <Heading>LESSONS</Heading>
             <SubHeading>Kannada Kali</SubHeading>
         </Image>
     )

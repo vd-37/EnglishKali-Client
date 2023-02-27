@@ -1,4 +1,5 @@
 import { styled, Box, Typography } from '@mui/material';
+import parse from 'html-react-parser';
 
 const Container = styled(Box)`
     border: 1px solid #d3cede;
